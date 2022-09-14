@@ -18,6 +18,12 @@ video_channel = 0
 if len(sys.argv) > 1:
     video_channel = int(sys.argv[1])
 
+DURATION = 20
+
+size = (1280, 720)
+video_file = "camera_test_output.mp4"
+
+
 # Create an object to read
 # from camera
 video = cv2.VideoCapture(video_channel)
@@ -27,32 +33,32 @@ video = cv2.VideoCapture(video_channel)
 if (video.isOpened() == False):
     raise RuntimeError("Error reading video file")
 
-# We need to set resolutions.
-# so, convert them from float to integer.
-frame_width = int(video.get(3))
-frame_height = int(video.get(4))
+video.set(cv2.CAP_PROP_FRAME_WIDTH, size[0])
+video.set(cv2.CAP_PROP_FRAME_HEIGHT, size[1])
+video.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
+video.set(cv2.CAP_PROP_FPS, 30)
 
-size = (frame_width, frame_height)
+capture_fps = video.get(cv2.CAP_PROP_FPS)
 
-print(f"starting video_channel={video_channel} size={size}", )
+print("\n\n")
+os.system('free -h')
+print("\n\n")
 
-# Below VideoWriter object will create
-# a frame of above defined The output
-# is stored in 'filename.avi' file.
-writer = cv2.VideoWriter('camera_test_output.avi',
-                         cv2.VideoWriter_fourcc(*'MJPG'),
-                         10, size)
+print(
+    f"starting video_channel={video_channel} size={size} capture_fps={capture_fps}", )
 
-print("recording 30 secs of video...")
+print(f"recording {DURATION} secs of video...")
 start = time.time()
 num_frames = 0
+captured_frames = []
 while(True):
     ret, frame = video.read()
 
     if ret == True:
         # Write the frame into the
         # file 'filename.avi'
-        writer.write(frame)
+        # writer.write(frame)
+        captured_frames.append(frame)
         num_frames += 1
 
     # Break the loop
@@ -60,8 +66,37 @@ while(True):
         break
 
     # runs for 30s
-    if time.time() - start >= 30:
+    if time.time() - start >= DURATION:
         break
+    # if num_frames > 1000:
+    #     break
+
+duration = time.time() - start
+print(
+    f"recorded {num_frames} frames in {duration}s ({num_frames/duration:.2f} fps)")
+
+print("\n\n")
+os.system('free -h')
+print("\n\n")
+
+print(f"\nSaving video to {video_file}")
+# Below VideoWriter object will create
+# a frame of above defined The output
+# is stored in 'filename.avi' file.
+start = time.time()
+
+writer = cv2.VideoWriter('camera_test_output.mp4',
+                         cv2.VideoWriter_fourcc(*'mp4v'),
+                         capture_fps,
+                         size
+                         )
+for frame in captured_frames:
+    writer.write(frame)
+
+duration = time.time() - start
+print(
+    f"saved {num_frames} frames in {duration}s ({num_frames/duration:.2f} fps)")
+
 
 # When everything done, release
 # the video capture and video
@@ -71,8 +106,7 @@ writer.release()
 
 
 print("The video was successfully saved.")
-print(f"recorded {num_frames} frames in 30s ({num_frames/30:.2f} fps)")
 print("")
 print("You can view the video recorded with:")
-print("   scp pi@raspberrypi.local:/home/pi/mi_corazon/camera_test_output.avi . && open camera_test_output.avi")
+print("   scp pi@raspberrypi.local:/home/pi/mi_corazon/camera_test_output.mp4 . && open camera_test_output.mp4")
 print("on your local machine")

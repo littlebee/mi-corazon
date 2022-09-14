@@ -36,7 +36,7 @@ rsync --progress --partial -avz \
 --exclude=node_modules \
 --exclude=data/ \
 --exclude=.git \
---exclude=yolov5 \
 --exclude=results* \
+--exclude=camera_test_output* \
 . $TARGET_HOST:$TARGET_DIR
 

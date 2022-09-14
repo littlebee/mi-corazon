@@ -1,3 +1,15 @@
+
+## our artifacts
+
+camera_test_output.*
+pyaudio_test_output.*
+
+data/
+
+server.pid
+server.log
+
+
 # Logs
 logs
 *.log
