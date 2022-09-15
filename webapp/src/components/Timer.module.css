@@ -1,0 +1,8 @@
+
+.timer {
+  position: absolute;
+  top: 20px;
+  left: 750px;
+  font-size: 100px;
+  color: limegreen;
+}

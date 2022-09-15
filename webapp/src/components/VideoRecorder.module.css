@@ -1,0 +1,84 @@
+
+.videoRecorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0b151f;
+}
+
+.awesome {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #C0C0C0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s ease 1s;
+}
+
+.pose {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s ease 1s;
+}
+
+.poseText {
+  position: absolute;
+  font-size: 50px;
+  color: #c20c0c;
+  margin: 20px;
+}
+
+.poseTopText {
+  top: 0;
+  left: 0;
+}
+
+.poseBottomText {
+  bottom: 0;
+  right: 0;
+}
+
+.shown {
+  opacity: 1;
+}
+
+.awesomeTitle {
+  margin-top: 100px;
+}
+
+.awesomeSubtitle {
+  margin-top: 40px;
+  transition-delay: 1.75s;
+}
+
+
+.smallLiveVideo {
+position: absolute;
+  top: 100px;
+  left: 155px;
+  height: 400px;
+}
+
+.fullLiveVideo {
+  height: 600px;
+  width: 100vw;
+}
+
+
+
+
+
+

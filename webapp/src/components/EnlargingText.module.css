@@ -1,0 +1,9 @@
+
+.enlargingText {
+  background-color: transparent;
+  color: #0c0c0c;
+  font-size: 1px;
+  transition: font-size 1s ease 1s;
+  transition-delay: .2s;
+}
+

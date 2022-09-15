@@ -4,6 +4,7 @@ import "./App.css";
 import MainMenu from "./components/MainMenu";
 
 import { PictureGallery } from "./components/PictureGallery";
+import { VideoRecorder } from "./components/VideoRecorder";
 
 const SLEEP_TIMEOUT = 30000;
 
@@ -17,7 +18,7 @@ function App() {
   const sleepTimeout = useRef(null);
 
   useEffect(() => {
-    if (["menu"].includes(mode)) {
+    if (["menu, record"].includes(mode)) {
       sleepTimeout.current = setTimeout(() => {
         setMode(MODE_GALLERY);
       }, SLEEP_TIMEOUT);
@@ -35,6 +36,10 @@ function App() {
   };
 
   const handleRecord = () => {
+    setMode(MODE_RECORD);
+  };
+
+  const handleRecordComplete = () => {
     setMode(MODE_GALLERY);
   };
 
@@ -64,6 +69,9 @@ function App() {
       )}
       {mode === MODE_MENU && (
         <MainMenu onRecord={handleRecord} onGallery={handleGallery} />
+      )}
+      {mode === MODE_RECORD && (
+        <VideoRecorder onComplete={handleRecordComplete} />
       )}
     </div>
   );

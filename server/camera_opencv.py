@@ -76,7 +76,7 @@ class OpenCvCamera(BaseCamera):
 
         frames = []  # Initialize array to store frames
 
-        # Store data in chunks for 3 seconds
+        # Store data in chunks for 20 seconds
         for i in range(0, int(AUDIO_RATE / AUDIO_CHUNK * AUDIO_CHUNK_SECONDS)):
             data = stream.read(AUDIO_CHUNK)
             frames.append(data)

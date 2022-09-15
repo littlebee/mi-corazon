@@ -5,6 +5,7 @@
  https://blog.miguelgrinberg.com/post/flask-video-streaming-revisited
 """
 import os
+import time
 import threading
 import json
 import logging
@@ -60,6 +61,18 @@ def picture():
 @app.route('/record_video')
 def record_video():
     OpenCvCamera.record_video()
+    return web_utils.respond_ok(app)
+
+
+@app.route('/is_new_video_ready')
+def is_new_video_ready():
+    return web_utils.respond_ok(app, OpenCvCamera.is_new_video_ready)
+
+
+@app.route('/save_new_video')
+def save_new_video():
+    os.rename(constants.LAST_AV_FILE,
+              f"{constants.SAVED_VIDEOS_DIR}/{int(time.time() * 1000)}.mp4")
     return web_utils.respond_ok(app)
 
 

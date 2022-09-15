@@ -1,0 +1,18 @@
+
+.countdown {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  padding-top: 45px;
+  position: absolute;
+  text-align: center;
+  width: 100vw;
+  z-index: 1;
+}
+
+.text {
+  color: limegreen;
+  width: 100vw;
+  text-align: center;
+}

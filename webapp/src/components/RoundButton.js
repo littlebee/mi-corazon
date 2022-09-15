@@ -13,8 +13,6 @@ export function RoundButton({ size, className, onClick, children }) {
 
   const cls = classnames(st.roundButton, className, sizeClass);
 
-  console.log("button size", { cls, size });
-
   return (
     <button className={cls} onClick={onClick}>
       {children}
