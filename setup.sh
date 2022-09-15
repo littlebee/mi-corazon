@@ -21,7 +21,7 @@ sudo pip3 install flask opencv-contrib-python==4.5.5.62 imutils opencv-python==3
 sudo pip3 install numpy --upgrade
 
 # web browser
-sudo apt install -y chromium-browser
+sudo apt install -y chromium-browser unclutter
 
 # webserver (flask) and websockets
 sudo pip3 install websockets flask flask_cors

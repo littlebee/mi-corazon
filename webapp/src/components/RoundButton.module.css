@@ -1,0 +1,26 @@
+
+.roundButton {
+  background-color: blue;
+  color: #0C0C0C;
+  border-color: transparent;
+}
+
+.large {
+  height: 250px;
+  width: 250px;
+  border-radius: 125px;
+  font-size: 48px;
+}
+
+.medium {
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
+  font-size: 20px;
+}
+
+.small {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import st from "./PictureGallery.module.css";
 
-export function PictureGallery() {
+export function PictureGallery({ onClick }) {
   const [cacheBreaker, setCacheBreaker] = useState(Date.now());
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export function PictureGallery() {
   const imgSrc = `http://buster2.local/picture?_cb=${cacheBreaker}`;
 
   return (
-    <div className={st.pictureGallery}>
+    <div className={st.pictureGallery} onClick={onClick}>
       <span className={st.helper}></span>
       <img
         className={st.picture}
