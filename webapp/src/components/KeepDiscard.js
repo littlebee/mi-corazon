@@ -46,11 +46,7 @@ export function KeepDiscard({ onDiscard, onKeep }) {
             Keep it!
             <div className={st.autosaveText}>
               <span>Autokeep in</span>
-              <Timer
-                className={st.timer}
-                seconds={2000}
-                onExpire={handleKeep}
-              />
+              <Timer className={st.timer} seconds={20} onExpire={handleKeep} />
             </div>
           </RoundButton>
         </div>

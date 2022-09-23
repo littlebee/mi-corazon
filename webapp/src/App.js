@@ -5,6 +5,7 @@ import MainMenu from "./components/MainMenu";
 
 import { PictureGallery } from "./components/PictureGallery";
 import { VideoRecorder } from "./components/VideoRecorder";
+import * as service from "./lib/service";
 
 const SLEEP_TIMEOUT = 30000;
 
@@ -18,7 +19,13 @@ function App() {
   const sleepTimeout = useRef(null);
 
   useEffect(() => {
-    if (["menu, record"].includes(mode)) {
+    if (mode !== MODE_GALLERY) {
+      service.brightWhite();
+    } else {
+      service.startHeartbeat();
+    }
+
+    if (mode === MODE_MENU) {
       sleepTimeout.current = setTimeout(() => {
         setMode(MODE_GALLERY);
       }, SLEEP_TIMEOUT);

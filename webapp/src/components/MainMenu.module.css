@@ -23,3 +23,12 @@
   background-color: #8f8fff;
 
 }
+
+.titleText {
+  position: absolute;
+  top: 70px;
+  left: 50px;
+  font-size: 36px;
+  width: 700px;
+  text-align: left;
+}

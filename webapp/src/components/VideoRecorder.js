@@ -23,7 +23,7 @@ const MODE_KEEP_DISCARD = "keep or discard";
 
 const LINEAR_STATE_TRANSITIONS = [
   // tuple of [mode, number of seconds for that mode]
-  [MODE_AWESOME, 3],
+  [MODE_AWESOME, 2],
   [MODE_POSE, 4],
   [MODE_COUNTDOWN, 3],
   [MODE_RECORDING, 20],
@@ -76,6 +76,9 @@ export function VideoRecorder({ onComplete }) {
         }
       }
     }, 1000);
+    return () => {
+      interval = null;
+    };
   }, []);
 
   const handleKeep = () => {

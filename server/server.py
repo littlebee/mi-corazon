@@ -21,6 +21,7 @@ import constants
 import web_utils
 from base_camera import BaseCamera
 from camera_opencv import OpenCvCamera
+from leds import Leds, MODE_HEARTBEAT, MODE_OFF, MODE_ON
 
 PROJECT_PATH = "/home/pi/mi_corazon"
 PICTURES_PATH = "/home/pi/Pictures"
@@ -31,6 +32,9 @@ app = Flask(__name__, static_folder=WEBAPP_ROOT)
 CORS(app, supports_credentials=True)
 
 camera = OpenCvCamera()
+#  this wasn't working when starting up from rc.local when it was
+# instantiating Leds too soon I think.  See ensureLeds below
+leds = None
 
 
 def gen_rgb_video(camera):
@@ -66,6 +70,9 @@ def record_video():
 
 @app.route('/is_new_video_ready')
 def is_new_video_ready():
+    # todo make this work from actual finish recording
+    leds.setMode(MODE_OFF)
+
     return web_utils.respond_ok(app, OpenCvCamera.is_new_video_ready)
 
 
@@ -109,7 +116,38 @@ def serve(path):
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
-        return send_from_directory(app.static_folder, 'index.html')
+        return send_from_directory(app.static_folder, 'index.html', cache_timeout=0)
+
+# lighting
+
+
+def ensure_leds():
+    global leds
+    if leds == None:
+        leds = Leds()
+
+
+@app.route('/bright_white')
+def bright_white():
+    ensure_leds()
+    leds.bright_white()
+    leds.setMode(MODE_ON)
+    return web_utils.respond_ok(app)
+
+
+@app.route('/start_heartbeat')
+def start_heartbeat():
+    ensure_leds()
+    leds.red()
+    leds.setMode(MODE_HEARTBEAT)
+    return web_utils.respond_ok(app)
+
+
+@app.route('/lights_off')
+def lights_off():
+    ensure_leds()
+    leds.setMode(MODE_OFF)
+    return web_utils.respond_ok(app)
 
 
 class webapp:
