@@ -61,6 +61,8 @@ class Leds:
 
         if Leds.thread is None:
             Leds.thread = threading.Thread(target=self._thread)
+
+            #  DISABLED LIGHTS FOR NOW.  this thread was consuming a full core
             # Leds.thread.start()
 
     def setMode(self, mode):

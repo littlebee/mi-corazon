@@ -136,7 +136,7 @@ class OpenCvCamera(BaseCamera):
                     capture_fps = len(OpenCvCamera.captured_frames) / duration
                     print(
                         f"saving file {RAW_RECORDING_FILE} {len(OpenCvCamera.captured_frames)} frames")
-
+                    t_start = time.time()
                     writer = cv2.VideoWriter(RAW_RECORDING_FILE,
                                              cv2.VideoWriter_fourcc(*'mp4v'),
                                              capture_fps,
@@ -146,16 +146,24 @@ class OpenCvCamera(BaseCamera):
                         writer.write(frame)
 
                     writer.release()
-                    print(f"saved file {RAW_RECORDING_FILE}")
+                    print(
+                        f"saved file {RAW_RECORDING_FILE} in {time.time() - t_start}s")
                     OpenCvCamera.captured_frames = []
 
                     OpenCvCamera.audio_thread.join()
 
                     print(f"combining video and audio")
-                    os.system(
-                        f"ffmpeg -y -i {RAW_RECORDING_FILE} -i {AUDIO_FILENAME} -c:v copy -c:a aac -vcodec h264 -acodec aac -strict -2  {constants.LAST_AV_FILE}")
+                    t_start = time.time()
+                    # encode for web mp4 video tag source (hella slow)
+                    # cmd = f"ffmpeg -y -i {RAW_RECORDING_FILE} -i {AUDIO_FILENAME} -c:v copy -c:a aac -vcodec h264 -acodec aac -strict -2  {constants.LAST_AV_FILE}"
 
-                    print("done.  new_video is ready")
+                    # just combine the audio and video files
+                    cmd = f"ffmpeg -y -ac 2 -channel_layout stereo -i {AUDIO_FILENAME} -i {RAW_RECORDING_FILE} {constants.LAST_AV_FILE}"
+                    os.system(cmd)
+                    print(
+                        f"Saved combined AV {constants.LAST_AV_FILE} in {time.time() - t_start}s")
+
+                    print("new_video is ready")
                     OpenCvCamera.is_new_video_ready = True
 
             yield img
